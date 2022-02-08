@@ -25,12 +25,18 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.github.promeg.pinyinhelper.Pinyin;
+import com.github.promeg.pinyinhelper.PinyinMapDict;
+import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -256,10 +262,22 @@ public class IndexableLayout extends FrameLayout {
     }
 
     /**
-     * set sort-mode
+     * 设置每个拼音分类中的数据的排序方式，注意这里并不是对索引的顺序进行排序，是对单个索引中的数据进行排序
+     *
+     * @deprecated 不建议使用此方法，容易引起歧意，请使用 {@link #setIndexCellItemDataComparator(Comparator)} 代替
      */
+    @Deprecated
     public <T extends IndexableEntity> void setComparator(Comparator<EntityWrapper<T>> comparator) {
         this.mComparator = comparator;
+        onDataChanged();
+    }
+
+    /**
+     * 设置每个拼音分类中的数据的排序方式，注意这里并不是对索引的顺序进行排序，是对单个索引中的数据进行排序
+     */
+    public void setIndexCellItemDataComparator(Comparator<EntityWrapper<? extends IndexableEntity>> comparator) {
+        this.mComparator = comparator;
+        onDataChanged();
     }
 
     /**
@@ -675,72 +693,67 @@ public class IndexableLayout extends FrameLayout {
      * List<T> -> List<Indexable<T>
      */
     private <T extends IndexableEntity> ArrayList<EntityWrapper<T>> transform(final List<T> datas) {
-        try {
-            TreeMap<String, List<EntityWrapper<T>>> map = new TreeMap<>(letterComparator);
+        TreeMap<String, List<EntityWrapper<T>>> map = new TreeMap<>(letterComparator);
 
-            for (int i = 0; i < datas.size(); i++) {
-                EntityWrapper<T> entity = new EntityWrapper<>();
-                T item = datas.get(i);
-                String indexName = item.getFieldIndexBy();
-                String pinyin = PinyinUtil.getPingYin(indexName);
-                entity.setPinyin(pinyin);
+        for (int i = 0; i < datas.size(); i++) {
+            EntityWrapper<T> entity = new EntityWrapper<>();
+            T item = datas.get(i);
+            String indexName = item.getFieldIndexBy();
+            String pinyin = PinyinUtil.getPingYin(indexName);
+            entity.setPinyin(pinyin);
 
-                // init EntityWrapper
-                if (PinyinUtil.matchingLetter(pinyin)) {
-                    entity.setIndex(pinyin.substring(0, 1).toUpperCase());
-                    entity.setIndexByField(item.getFieldIndexBy());
-                } else if (PinyinUtil.matchingPolyphone(pinyin)) {
-                    entity.setIndex(PinyinUtil.gePolyphoneInitial(pinyin).toUpperCase());
-                    entity.setPinyin(PinyinUtil.getPolyphoneRealPinyin(pinyin));
-                    String hanzi = PinyinUtil.getPolyphoneRealHanzi(indexName);
-                    entity.setIndexByField(hanzi);
-                    // 把多音字的真实indexField重新赋值
-                    item.setFieldIndexBy(hanzi);
-                } else {
-                    entity.setIndex(INDEX_SIGN);
-                    entity.setIndexByField(item.getFieldIndexBy());
-                }
-                entity.setIndexTitle(entity.getIndex());
-                entity.setData(item);
-                entity.setOriginalPosition(i);
-                item.setFieldPinyinIndexBy(entity.getPinyin());
+            // init EntityWrapper
+            if (PinyinUtil.matchingLetter(pinyin)) {
+                entity.setIndex(pinyin.substring(0, 1).toUpperCase());
+                entity.setIndexByField(item.getFieldIndexBy());
+            } else if (PinyinUtil.matchingPolyphone(pinyin)) {
+                entity.setIndex(PinyinUtil.gePolyphoneInitial(pinyin).toUpperCase());
+                entity.setPinyin(PinyinUtil.getPolyphoneRealPinyin(pinyin));
+                String hanzi = PinyinUtil.getPolyphoneRealHanzi(indexName);
+                entity.setIndexByField(hanzi);
+                // 把多音字的真实indexField重新赋值
+                item.setFieldIndexBy(hanzi);
+            } else {
+                entity.setIndex(INDEX_SIGN);
+                entity.setIndexByField(item.getFieldIndexBy());
+            }
+            entity.setIndexTitle(entity.getIndex());
+            entity.setData(item);
+            entity.setOriginalPosition(i);
+            item.setFieldPinyinIndexBy(entity.getPinyin());
 
-                String inital = entity.getIndex();
+            String inital = entity.getIndex();
 
-                List<EntityWrapper<T>> list;
-                if (!map.containsKey(inital)) {
-                    list = new ArrayList<>();
-                    list.add(new EntityWrapper<T>(entity.getIndex(), EntityWrapper.TYPE_TITLE));
-                    map.put(inital, list);
-                } else {
-                    list = map.get(inital);
-                }
-
-                list.add(entity);
+            List<EntityWrapper<T>> list;
+            if (!map.containsKey(inital)) {
+                list = new ArrayList<>();
+                list.add(new EntityWrapper<T>(entity.getIndex(), EntityWrapper.TYPE_TITLE));
+                map.put(inital, list);
+            } else {
+                list = map.get(inital);
             }
 
-            ArrayList<EntityWrapper<T>> list = new ArrayList<>();
-            for (List<EntityWrapper<T>> indexableEntities : map.values()) {
-                if (mComparator != null) {
-                    Collections.sort(indexableEntities, mComparator);
-                } else {
-                    Comparator comparator;
-                    if (mCompareMode == MODE_FAST) {
-                        comparator = new InitialComparator<T>();
-                        Collections.sort(indexableEntities, comparator);
-                    } else if (mCompareMode == MODE_ALL_LETTERS) {
-                        comparator = new PinyinComparator<T>();
-                        Collections.sort(indexableEntities, comparator);
-                    }
-                }
-
-                list.addAll(indexableEntities);
-            }
-            return list;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            list.add(entity);
         }
+
+        ArrayList<EntityWrapper<T>> list = new ArrayList<>();
+        for (List<EntityWrapper<T>> indexableEntities : map.values()) {
+            if (mComparator != null) {
+                Collections.sort(indexableEntities, mComparator);
+            } else {
+                Comparator comparator;
+                if (mCompareMode == MODE_FAST) {
+                    comparator = new InitialComparator<T>();
+                    Collections.sort(indexableEntities, comparator);
+                } else if (mCompareMode == MODE_ALL_LETTERS) {
+                    comparator = new PinyinComparator<T>();
+                    Collections.sort(indexableEntities, comparator);
+                }
+            }
+
+            list.addAll(indexableEntities);
+        }
+        return list;
     }
 
     private Handler getSafeHandler() {
