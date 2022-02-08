@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatTextView;
@@ -93,6 +94,8 @@ public class IndexableLayout extends FrameLayout {
     private int mCompareMode = MODE_FAST;
     private Comparator mComparator;
     private Handler mHandler;
+    @NonNull
+    private Comparator<String> letterComparator = new DefaultIndexComparator();
 
     private HeaderFooterDataObserver<EntityWrapper> mHeaderFooterDataSetObserver = new HeaderFooterDataObserver<EntityWrapper>() {
         @Override
@@ -260,6 +263,17 @@ public class IndexableLayout extends FrameLayout {
     }
 
     /**
+     * 设置索引的字母的排序处理，将会被使用在索引的字母显示；默认情况下 # 是在最前面的，按 String 的默认排序处理
+     */
+    public void setIndexLetterComparator(Comparator<String> comparator) {
+        if (comparator != null) {
+            this.letterComparator = comparator;
+            mIndexBar.setIndexLetterComparator(letterComparator);
+            onDataChanged();
+        }
+    }
+
+    /**
      * set Sticky Enable
      */
     public void setStickyEnable(boolean enable) {
@@ -343,6 +357,7 @@ public class IndexableLayout extends FrameLayout {
 
         mIndexBar = new IndexBar(context);
         mIndexBar.init(mBarBg, mBarTextColor, mBarFocusTextColor, mBarTextSize, mBarTextSpace);
+        mIndexBar.setIndexLetterComparator(letterComparator);
         LayoutParams params = new LayoutParams((int) mBarWidth, LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.END | Gravity.CENTER_VERTICAL;
         addView(mIndexBar, params);
@@ -661,17 +676,7 @@ public class IndexableLayout extends FrameLayout {
      */
     private <T extends IndexableEntity> ArrayList<EntityWrapper<T>> transform(final List<T> datas) {
         try {
-            TreeMap<String, List<EntityWrapper<T>>> map = new TreeMap<>(new Comparator<String>() {
-                @Override
-                public int compare(String lhs, String rhs) {
-                    if (lhs.equals(INDEX_SIGN)) {
-                        return rhs.equals(INDEX_SIGN) ? 0 : 1;
-                    } else if (rhs.equals(INDEX_SIGN)) {
-                        return -1;
-                    }
-                    return lhs.compareTo(rhs);
-                }
-            });
+            TreeMap<String, List<EntityWrapper<T>>> map = new TreeMap<>(letterComparator);
 
             for (int i = 0; i < datas.size(); i++) {
                 EntityWrapper<T> entity = new EntityWrapper<>();
@@ -743,5 +748,12 @@ public class IndexableLayout extends FrameLayout {
             mHandler = new Handler(Looper.getMainLooper());
         }
         return mHandler;
+    }
+
+    private static class DefaultIndexComparator implements Comparator<String> {
+        @Override
+        public int compare(String lhs, String rhs) {
+            return lhs.compareTo(rhs);
+        }
     }
 }

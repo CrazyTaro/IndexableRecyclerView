@@ -4,8 +4,8 @@ package me.yokeyword.indexablerv;
  * Created by YoKey on 16/10/6.
  */
 public class EntityWrapper<T> {
-    static final int TYPE_TITLE = Integer.MAX_VALUE - 1;
-    static final int TYPE_CONTENT = Integer.MAX_VALUE;
+    public static final int TYPE_TITLE = Integer.MAX_VALUE - 1;
+    public static final int TYPE_CONTENT = Integer.MAX_VALUE;
 
     static final int TYPE_HEADER = 1;
     static final int TYPE_FOOTER = 2;
@@ -93,19 +93,19 @@ public class EntityWrapper<T> {
         this.headerFooterType = headerFooterType;
     }
 
-    public boolean isTitle(){
+    public boolean isTitle() {
         return itemType == TYPE_TITLE;
     }
 
-    public boolean isContent(){
+    public boolean isContent() {
         return itemType == TYPE_CONTENT;
     }
 
-    public boolean isHeader(){
+    public boolean isHeader() {
         return headerFooterType == TYPE_HEADER;
     }
 
-    public boolean isFooter(){
+    public boolean isFooter() {
         return headerFooterType == TYPE_FOOTER;
     }
 }

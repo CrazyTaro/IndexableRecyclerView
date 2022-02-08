@@ -1,11 +1,12 @@
 package me.yokeyword.indexablerv;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+
+import android.support.v7.widget.RecyclerView;
 
 /**
  * Created by YoKey on 16/10/6.

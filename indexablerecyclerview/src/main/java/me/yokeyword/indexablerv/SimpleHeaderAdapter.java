@@ -1,9 +1,10 @@
 package me.yokeyword.indexablerv;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import java.util.List;
+
+import android.support.v7.widget.RecyclerView;
 
 /**
  * 该HeaderAdapter 接收一个IndexableAdapter, 使其布局以及点击事件和IndexableAdapter一致

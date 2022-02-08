@@ -5,12 +5,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +33,7 @@ class IndexBar extends View {
 
     private int mSelectionPosition;
     private float mIndexHeight;
+    private Comparator<String> letterComparator;
 
     private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint mFocusPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -97,6 +101,10 @@ class IndexBar extends View {
         }
     }
 
+    void setIndexLetterComparator(@NonNull Comparator<String> comparator) {
+        this.letterComparator = comparator;
+    }
+
     int getPositionForPointY(float y) {
         if (mIndexList.size() <= 0) return -1;
 
@@ -139,6 +147,7 @@ class IndexBar extends View {
         this.mMapping.clear();
 
         ArrayList<String> tempHeaderList = null;
+        ArrayList<String> tempFooterList = null;
         if (showAllLetter) {
             mIndexList = Arrays.asList(getResources().getStringArray(R.array.indexable_letter));
             mIndexList = new ArrayList<>(mIndexList);
@@ -158,7 +167,10 @@ class IndexBar extends View {
                             if (wrapper.getHeaderFooterType() == EntityWrapper.TYPE_HEADER && tempHeaderList.indexOf(index) < 0) {
                                 tempHeaderList.add(index);
                             } else if (wrapper.getHeaderFooterType() == EntityWrapper.TYPE_FOOTER) {
-                                mIndexList.add(index);
+                                if (tempFooterList == null) {
+                                    tempFooterList = new ArrayList<>();
+                                }
+                                tempFooterList.add(index);
                             }
                         }
                     }
@@ -168,8 +180,14 @@ class IndexBar extends View {
                 }
             }
         }
+        if (letterComparator != null) {
+            Collections.sort(mIndexList, letterComparator);
+        }
         if (showAllLetter) {
             mIndexList.addAll(0, tempHeaderList);
+        }
+        if (tempFooterList != null) {
+            mIndexList.addAll(tempFooterList);
         }
         requestLayout();
     }
