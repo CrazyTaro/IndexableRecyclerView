@@ -11,8 +11,11 @@ A RecyclerView with indexable, sticky and many other features.
 
 # Demo演示
 
-<img src="/gif/demo_city.gif" width="320px"/>
-<img src="/gif/demo_contact.gif" width="320px"/>
+- 城市选择
+  ![](./gif/demo_city.gif)
+
+- 联系人选择
+  ![](./gif/demo_contact.gif)
 
 # 更新内容
 

@@ -24,5 +24,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
 //    compile project(':indexablerecyclerview')
-    implementation 'com.github.CrazyTaro:IndexableRecyclerView:1.0.2'
+    implementation 'com.github.CrazyTaro:IndexableRecyclerView:v1.0.3'
 }

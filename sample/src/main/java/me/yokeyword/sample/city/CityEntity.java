@@ -1,6 +1,6 @@
 package me.yokeyword.sample.city;
 
-import me.yokeyword.indexablerv.IndexableEntity;
+import me.yokeyword.lincolnct.indexablerv.IndexableEntity;
 
 /**
  * Created by YoKey on 16/10/7.

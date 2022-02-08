@@ -17,11 +17,11 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import me.yokeyword.indexablerv.EntityWrapper;
-import me.yokeyword.indexablerv.IndexableAdapter;
-import me.yokeyword.indexablerv.IndexableEntity;
-import me.yokeyword.indexablerv.IndexableLayout;
-import me.yokeyword.indexablerv.SimpleHeaderAdapter;
+import me.yokeyword.lincolnct.indexablerv.EntityWrapper;
+import me.yokeyword.lincolnct.indexablerv.IndexableAdapter;
+import me.yokeyword.lincolnct.indexablerv.IndexableEntity;
+import me.yokeyword.lincolnct.indexablerv.IndexableLayout;
+import me.yokeyword.lincolnct.indexablerv.SimpleHeaderAdapter;
 import me.yokeyword.sample.R;
 import me.yokeyword.sample.ToastUtil;
 

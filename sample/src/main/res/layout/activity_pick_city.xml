@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <me.yokeyword.indexablerv.IndexableLayout
+        <me.yokeyword.lincolnct.indexablerv.IndexableLayout
             android:id="@+id/indexableLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

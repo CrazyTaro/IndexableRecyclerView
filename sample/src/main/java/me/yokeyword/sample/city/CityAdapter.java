@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import me.yokeyword.indexablerv.IndexableAdapter;
+import me.yokeyword.lincolnct.indexablerv.IndexableAdapter;
 import me.yokeyword.sample.R;
 
 /**

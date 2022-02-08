@@ -17,11 +17,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import me.yokeyword.indexablerv.IndexableAdapter;
-import me.yokeyword.indexablerv.IndexableHeaderAdapter;
-import me.yokeyword.indexablerv.IndexableLayout;
-import me.yokeyword.indexablerv.SimpleFooterAdapter;
-import me.yokeyword.indexablerv.SimpleHeaderAdapter;
+import me.yokeyword.lincolnct.indexablerv.IndexableAdapter;
+import me.yokeyword.lincolnct.indexablerv.IndexableHeaderAdapter;
+import me.yokeyword.lincolnct.indexablerv.IndexableLayout;
+import me.yokeyword.lincolnct.indexablerv.SimpleFooterAdapter;
+import me.yokeyword.lincolnct.indexablerv.SimpleHeaderAdapter;
 import me.yokeyword.sample.R;
 import me.yokeyword.sample.ToastUtil;
 
