@@ -7,15 +7,17 @@ A RecyclerView with indexable, sticky and many other features.
 > 替代之前的IndexableStickyListView(移至该[分支](https://github.com/YoKeyword/IndexableRecyclerView/tree/listview)),进行大幅度重构，性能优化，更易使用的API，更易拓展的HeaderView/FooterView等等！
 重构历程可以看这篇文章：[［设计模式］记一次开源库的重构历程](http://www.jianshu.com/p/2ee8706c346b)
 
-**特别感谢原项目开发者，原项目请查看：https://github.com/YoKeyword/IndexableRecyclerView **
+**特别感谢原项目开发者，原项目请查看：** https://github.com/YoKeyword/IndexableRecyclerView
 
 # Demo演示
 
 - 城市选择
-  ![](./gif/demo_city.gif)
+
+<img src="./gif/demo_city.gif" width="320px"/>
 
 - 联系人选择
-  ![](./gif/demo_contact.gif)
+
+<img src="./gif/demo_contact.gif" width="320px"/>
 
 # 更新内容
 
@@ -38,32 +40,6 @@ A RecyclerView with indexable, sticky and many other features.
 
 6、使用[TinyPinyin](https://github.com/promeG/TinyPinyin)代替Pinyin4j.jar库，体积更小，拼音转化速度提升4倍！
 
-# 更新日志
-
-1.3.0
-
-* 多音字借助TinyPinyin处理
-* 可以自定义排序方式
-
-1.2.4
-
-* Fix 数据变动时，StickTitle不及时更新问题；增加2处安全校验
-
-1.2.0
-
-* 支持GridLayoutManager! (感谢[guodongAndroid](https://github.com/guodongAndroid))
-
-1.0.7
-
-* 默认不再显示左侧的悬浮气泡
-* 默认排序方式改为快速排序，提供一个MODE_NONE的排序方式
-
-1.0.5 为HeaderView/FooterView添加:
-
-* `indexableLayout.removeHeaderAdapter();`
-* `headerAdapter.addData()`
-* `headerAdapter.removeData()`
-
 # 如何使用
 
 ### gradle
@@ -81,15 +57,15 @@ allprojects {
 
 项目下app的build.gradle中依赖：
 
-````groovy
+```groovy
 implementation 'com.github.CrazyTaro:IndexableRecyclerView:Tag'
 compile 'com.android.support:appcompat-v7:你使用的版本号'
 compile 'com.android.support:recyclerview-v7:你使用的版本号'
-````
+```
 
 ### Xml
 
-````xml
+```xml
 
 <me.yokeyword.indexablerv.IndexableLayout app:indexBar_layout_width="24dp"
     app:indexBar_background="#08000000"
@@ -97,13 +73,13 @@ compile 'com.android.support:recyclerview-v7:你使用的版本号'
     app:indexBar_selectedTextColor="#f33737"
     app:indexBar_textSize="14sp"
     app:indexBar_textSpace="6dp" />
-````
+```
 
 ### 3步集成
 
 **1、实体类实现IndexableEntity**
 
-````java
+```java
 public class CityEntity implements IndexableEntity {
     ...
     private String name;
@@ -124,11 +100,11 @@ public class CityEntity implements IndexableEntity {
         this.pinyin = pinyin; // 保存排序field的拼音,在执行比如搜索等功能时有用 （若不需要，空实现该方法即可）
     }
 }
-````
+```
 
 **2、继承IndexAdapter**
 
-````java
+```java
 public class CityAdapter extends IndexableAdapter<CityEntity> {
     @Override
     public RecyclerView.ViewHolder onCreateTitleViewHolder(ViewGroup parent) {
@@ -150,7 +126,7 @@ public class CityAdapter extends IndexableAdapter<CityEntity> {
         // 填充 内容Item 布局
     }
 }
-````
+```
 
 **3、绑定视图和数据**
 
@@ -170,14 +146,15 @@ adapter.setOnItemContentClickListener(listener);
 
 ### 1、设置 索引悬浮提示框 风格
 
-````java
+```java
 // 前者Material Design风格右侧气泡 ， 后者 居中 IOS风格气泡
 indexableLayout.setOverlayStyle_MaterialDesign(int Color)&setOverlayStyle_Center()
-````
+```
 
 ### 2、多音字处理
 
 多音字处理得益于使用了[TinyPinyin](https://github.com/promeG/TinyPinyin)，可以如下设置：
+
 ```java
 // 添加中文城市词典
 Pinyin.init(Pinyin.newConfig().with(CnCityDict.getInstance());
@@ -195,7 +172,8 @@ Pinyin.init(Pinyin.newConfig()
 ```
 
 ### 3、添加自定义HeaderView，FooterView
-````java
+
+```java
 indexableLayout.addHeaderAdapter(IndexableHeaderAdapter adapter)    // 添加HeaderView
 indexableLayout.addFooterAdapter(IndexableFooterAdapter adapter)    // 添加FooterView
 
@@ -209,8 +187,8 @@ IndexableHeaderAdapter<T>(String index, String indexTitle, List<T> datas){
 }
 
 // 如果想添加的HeaderView，和主Adapter的布局完全一致，则可以使用:
-new SimpleHeaderAdapter(IndexableAdapter<T> adapter, String index, String indexTitle, List<T> datas);
-````
+new SimpleHeaderAdapter(IndexableAdapter<T> adapter,String index,String indexTitle,List<T> datas);
+```
 
 ### 4、更改排序规则
 
