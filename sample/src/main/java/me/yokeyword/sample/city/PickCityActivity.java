@@ -19,6 +19,7 @@ import java.util.List;
 
 import me.yokeyword.indexablerv.EntityWrapper;
 import me.yokeyword.indexablerv.IndexableAdapter;
+import me.yokeyword.indexablerv.IndexableEntity;
 import me.yokeyword.indexablerv.IndexableLayout;
 import me.yokeyword.indexablerv.SimpleHeaderAdapter;
 import me.yokeyword.sample.R;
@@ -140,13 +141,32 @@ public class PickCityActivity extends AppCompatActivity {
     }
 
     public void changeComparator(View view) {
-        ((IndexableLayout) findViewById(R.id.indexableLayout))
-                .setIndexLetterComparator(new Comparator<String>() {
-                    @Override
-                    public int compare(String s, String t1) {
-                        return -s.compareTo(t1);
+        IndexableLayout index = ((IndexableLayout) findViewById(R.id.indexableLayout));
+        index.setIndexLetterComparator(new Comparator<String>() {
+            @Override
+            public int compare(String s, String t1) {
+                return -s.compareTo(t1);
+            }
+        });
+
+        index.setIndexCellItemDataComparator(new Comparator<EntityWrapper<? extends IndexableEntity>>() {
+            @Override
+            public int compare(EntityWrapper<? extends IndexableEntity> entityWrapper, EntityWrapper<? extends IndexableEntity> t1) {
+                CityEntity city1 = (CityEntity) entityWrapper.getData();
+                CityEntity city2 = (CityEntity) t1.getData();
+                if (city1 == null || city1.getName() == null) {
+                    return -1;
+                } else if (city2 == null || city2.getName() == null) {
+                    return 1;
+                } else {
+                    if (city1.getName().length() == city2.getName().length()) {
+                        return city1.getName().compareTo(city2.getName());
+                    } else {
+                        return city1.getName().length() - city2.getName().length();
                     }
-                });
+                }
+            }
+        });
     }
 
     // 更新数据点击事件
