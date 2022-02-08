@@ -1,4 +1,4 @@
-package me.yokeyword.indexablerv.database;
+package me.yokeyword.lincolnct.indexablerv.database;
 
 /**
  * Created by YoKey on 16/10/13.

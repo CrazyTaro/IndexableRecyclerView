@@ -1,4 +1,4 @@
-package me.yokeyword.indexablerv;
+package me.yokeyword.lincolnct.indexablerv;
 
 import android.view.ViewGroup;
 

@@ -1,4 +1,4 @@
-package me.yokeyword.indexablerv;
+package me.yokeyword.lincolnct.indexablerv;
 
 /**
  * Created by YoKey on 16/10/6.

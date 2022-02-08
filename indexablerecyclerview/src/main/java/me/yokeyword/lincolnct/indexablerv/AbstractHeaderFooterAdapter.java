@@ -1,4 +1,4 @@
-package me.yokeyword.indexablerv;
+package me.yokeyword.lincolnct.indexablerv;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
-import me.yokeyword.indexablerv.database.HeaderFooterDataObservable;
-import me.yokeyword.indexablerv.database.HeaderFooterDataObserver;
-import me.yokeyword.indexablerv.database.IndexBarDataObservable;
-import me.yokeyword.indexablerv.database.IndexBarDataObserver;
+import me.yokeyword.lincolnct.indexablerv.database.HeaderFooterDataObservable;
+import me.yokeyword.lincolnct.indexablerv.database.HeaderFooterDataObserver;
+import me.yokeyword.lincolnct.indexablerv.database.IndexBarDataObservable;
+import me.yokeyword.lincolnct.indexablerv.database.IndexBarDataObserver;
 
 /**
  * Created by YoKey on 16/10/16.

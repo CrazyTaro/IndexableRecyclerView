@@ -1,4 +1,4 @@
-package me.yokeyword.indexablerv;
+package me.yokeyword.lincolnct.indexablerv;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,27 +25,21 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.github.promeg.pinyinhelper.Pinyin;
-import com.github.promeg.pinyinhelper.PinyinMapDict;
-import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import me.yokeyword.indexablerecyclerview.R;
-import me.yokeyword.indexablerv.database.DataObserver;
-import me.yokeyword.indexablerv.database.HeaderFooterDataObserver;
-import me.yokeyword.indexablerv.database.IndexBarDataObserver;
+import me.yokeyword.lincolnct.indexablerv.database.DataObserver;
+import me.yokeyword.lincolnct.indexablerv.database.HeaderFooterDataObserver;
+import me.yokeyword.lincolnct.indexablerv.database.IndexBarDataObserver;
 
 /**
  * RecyclerView + IndexBar

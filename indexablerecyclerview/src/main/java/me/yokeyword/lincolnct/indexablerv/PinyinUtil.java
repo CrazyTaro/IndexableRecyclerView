@@ -1,4 +1,4 @@
-package me.yokeyword.indexablerv;
+package me.yokeyword.lincolnct.indexablerv;
 
 import com.github.promeg.pinyinhelper.Pinyin;
 

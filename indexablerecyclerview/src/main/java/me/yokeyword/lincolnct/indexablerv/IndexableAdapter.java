@@ -1,4 +1,4 @@
-package me.yokeyword.indexablerv;
+package me.yokeyword.lincolnct.indexablerv;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
-import me.yokeyword.indexablerv.database.DataObservable;
-import me.yokeyword.indexablerv.database.DataObserver;
+import me.yokeyword.lincolnct.indexablerv.database.DataObservable;
+import me.yokeyword.lincolnct.indexablerv.database.DataObserver;
 
 /**
  * Created by YoKey on 16/10/6.
