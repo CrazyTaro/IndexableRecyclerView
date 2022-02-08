@@ -14,6 +14,7 @@ import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import me.yokeyword.indexablerv.EntityWrapper;
@@ -136,6 +137,16 @@ public class PickCityActivity extends AppCompatActivity {
 
         // 搜索Demo
         initSearch();
+    }
+
+    public void changeComparator(View view) {
+        ((IndexableLayout) findViewById(R.id.indexableLayout))
+                .setIndexLetterComparator(new Comparator<String>() {
+                    @Override
+                    public int compare(String s, String t1) {
+                        return -s.compareTo(t1);
+                    }
+                });
     }
 
     // 更新数据点击事件

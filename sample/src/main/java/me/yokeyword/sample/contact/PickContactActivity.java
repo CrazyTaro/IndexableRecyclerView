@@ -95,7 +95,7 @@ public class PickContactActivity extends AppCompatActivity {
         indexableLayout.addHeaderAdapter(mBannerHeaderAdapter);
 
         // FooterView
-        indexableLayout.addFooterAdapter(new SimpleFooterAdapter<>(mAdapter, "尾", "我是FooterView", initFavDatas()));
+        indexableLayout.addFooterAdapter(new SimpleFooterAdapter<>(mAdapter, "❃", "我是FooterView", initFavDatas()));
     }
 
     /**
