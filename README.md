@@ -16,6 +16,8 @@ A RecyclerView with indexable, sticky and many other features.
 
 # 更新内容
 
+[![](https://jitpack.io/v/CrazyTaro/IndexableRecyclerView.svg)](https://jitpack.io/#CrazyTaro/IndexableRecyclerView)
+
 1. 新增数据列表/索引字母允许通过自定义的 comparator 配置并调整顺序，# 不再固定位置
 2. 自动关联列表及索引字母列表，在进行 comparator 变更时会同步更新数据列表
 
